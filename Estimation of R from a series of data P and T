@@ -1,0 +1,38 @@
+with open('medidas_PT_H.txt', 'r') as archivo:
+    almacen = archivo.readlines()
+    presion, temperatura = [[], [], []], []
+    for j in almacen:
+        temperatura.append(float(j.split()[0]))
+        for i in range(3):
+            presion[i].append(float(j.split()[i+1]))
+            
+            
+            
+#Definiendo Datos y graficas
+fig, axes = plt.subplots(1, 3, figsize=(24, 8))
+axes[0].plot(temperatura, presion[0], 'r+', ms = 2, label = "valores")
+axes[1].plot(temperatura, presion[1], 'r+', ms = 2, label = "valores")
+axes[2].plot(temperatura, presion[2], 'r+', ms = 2, label = "valores")
+#funcion del gas
+gas = [lambda x: x]
+R = [[],[],[]]
+#volumen en litros
+vi = [4,6,15]
+#Calculo de la constante
+for i in range(len(vi)):
+    R[i] = my_ls_params (gas, temperatura, presion[i])   
+axes[0].plot(temperatura, R[0]*temperatura,"k", label = "ajuste")
+axes[1].plot(temperatura, R[1]*temperatura,"k", label = "ajuste")
+axes[2].plot(temperatura, R[2]*temperatura,"k", label = "ajuste")
+
+for i in range(len(vi)):
+    axes[i].legend()
+    axes[i].set(xlabel = "Temperatura", ylabel = "Presion")
+    print("R",i,": ", R[i]*vi[i]/10)
+
+print("La contante universal de los gases tiene un valor de 0.08205747")
+
+"""
+Measurements.txt contains temperature data and 3 different pressure measurements.
+Objective is to calculate the constant 3 from the temperature data and 3 different pressure measurements.
+"""
