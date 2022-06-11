@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def my_func_fit(x,y):
+    """
+    Parametros
+    name: x type array
+    name: y type array
+    return alfa,beta
+    """
+    f = [lambda x: np.log(x), lambda x: 0*x+1]
+    #call function my_ls_params to create parameters matriz
+    beta,alpha = my_ls_params(f,x,np.log(y))
+    return beta,np.exp(alpha)
+    
+    """
+    usage example
+    """
+x_z = np.linspace(0.1, 10, 101) 
+y_z = 0.1*x_z**0.5 + 0.02*np.random.random(len(x_z))
+beta_r,alpha_r = my_func_fit(x_z, y_z)
+
+plt.plot(x_z, y_z, 'ro',ms=1, label = "datos")
+plt.plot(x_z, alpha_r*x_z**beta_r,"k", label = "ajuste de datos")
+plt.legend()
+
+    
+    
