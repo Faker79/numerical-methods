@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def my_ls_params (f, x, y):
+    """
+    Parametros
+    name:f type: metodo
+    name:x type: list
+    name:y type: list
+    return: parameters matrix
+    """
+    #List len f
+    matriz = list(range(len(f)))
+    
+    for i in range(len(f)):
+        matriz_beta = list(range(len(x)))
+        for j in range(len(x)):
+            matriz_beta[j] = f[i](x[j])
+        matriz[i] = matriz_beta
+        
+    #Creando A.T
+    transpuesta = (np.array(matriz)).T
+    beta = np.linalg.pinv(transpuesta).dot(y)
+    return beta
+    
+    """
+    usage example
+    """
+f = [lambda x: x, lambda x: 0*x +1]
+x_k = np.linspace(0, 1, 101)
+y_k = 1 + x_k + x_k*np.random.random(len(x_k))
+matriz_para = my_ls_params(f,x_k, y_k)
+plt.plot(x_k,y_k, "rv", ms = 1, label = "Datos")
+plt.plot(x_k, matriz_para[0]*f[0](x_k) + matriz_para[1]*f[1](x_k),"k", label = "Datos ajustados")
+plt.legend()
