@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def my_exp_regression (x,y):
+    """
+    Parametros:
+    name: x type array
+    name: y type array
+    return alpha beta
+    """
+    f =  [lambda x: x, lambda x: 0*x+1]
+    #call function my_ls_params to create parameters matrix
+    beta,alpha = my_ls_params(f,x,np.log(y))
+    return np.exp(alpha),beta
+    
+    """
+    Usage example
+    """
+x_i = np.linspace(0, 1, 1000)
+y_i = 2*np.exp(-0.5*x_i) + 0.25*np.random.random(len(x_i))
+alpha, beta = my_exp_regression(x_i, y_i)
+plt.figure(figsize = (15,8))
+plt.plot(x_i,y_i,"r+", label = "datos")
+plt.plot(x_i, alpha*np.exp(beta*x_i), "k", label='regresion')
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title('Modelo exponencia')
+plt.legend()
+plt.show()
