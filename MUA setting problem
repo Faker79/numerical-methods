@@ -1,0 +1,25 @@
+with open("medidas_movimiento_acelerado.txt","r") as archivo:
+    almacen = archivo.readlines()
+    posicion,tiempo = [],[]
+    for i in almacen:
+        tiempo.append(float(i.split()[0]))
+        posicion.append(float(i.split()[1]))
+tiempo,posicion = np.array(tiempo),np.array(posicion)
+#Definiendo datos y grafica
+fx = [lambda x: x, lambda x: x**2]
+v0,a = my_ls_params (fx, tiempo, posicion)
+plt.figure(figsize = (15,8))
+plt.plot(tiempo, posicion, 'r+', ms = 8, label = "Datos")
+plt.plot(tiempo, v0*tiempo + a*tiempo**2, '-k', label = "Ajuste")
+plt.xlabel("Tiempo")
+plt.ylabel("Posicion")
+plt.title("Tiempo vs posicion")
+plt.legend()
+print("Velocidad inicial: ", v0)
+print("Aceleracion: ", a*2)
+
+"""
+Medidas_movimiento_acelerado it is a txt file that contains time and position of an accelerated particle,
+this code can fit any .txt file whose data has time in the first column and position in the second.
+The file Medidas_movimiento_acelerado is available in this repository
+"""
